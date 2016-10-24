@@ -1,0 +1,93 @@
+<!-- 作业 17 -->
+
+<!-- 实现一个登录页, 有 2 个标签分别是用户名输入框和登录按钮
+给登录按钮绑定一个 click 事件
+检查用户名是否符合如下规则
+1，第一位是字母
+2，只能包含字母、数字、下划线
+3，只能字母或数字结尾
+4，最小长度2
+5，最大长度10
+
+如果符合规则, log '检查合格'
+如果不符合, 在登录按钮后插入一个红色 h1 标签
+内容是 '用户名错误'
+
+需要补全的代码自行解决 -->
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>答案8.17</title>
+        <style>
+            .msg-error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='id-div-form'>
+            <input id='id-input-name' type="text" value="">
+            <button id='id-button-login' type="button">登录</button>
+        </div>
+        <script>
+            // 给登录按钮绑定一个 click 事件
+            // 检查用户名是否符合如下规则
+            // 1，第一位是字母
+            // 2，只能包含字母、数字、下划线
+            // 3，只能字母或数字结尾
+            // 4，最小长度2
+            // 5，最大长度10
+            //
+            // 如果符合规则, log '检查合格'
+            // 如果不符合, 在登录按钮后插入一个红色 h1 标签
+            // 内容是 '用户名错误'
+            var button = document.querySelector('#id-button-login')
+            button.addEventListener('click', function(){
+                // get user name
+                var input = document.querySelector('#id-input-name')
+                var name = input.value
+                // check
+                if (validate(name)) {
+                    console.log('检查合格')
+                } else {
+                    insertError()
+                }
+            })
+
+            var validate = function(s) {
+                var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                var digits = '1234567890'
+                //
+                // 检查各种条件
+                // 只包含字母 数字 下划线
+                var validChar = true
+                var chars = letters + digits + '_'
+                for (var i = 0; i < s.length; i++) {
+                    var char = s[i]
+                    if (!chars.includes(char)) {
+                        validChar = false
+                    }
+                }
+                // 第一位是字母
+                var validHead = letters.includes(s[0])
+                // 结尾是字母或者数字, 前面已经确保了所有字符都是合法的, 这里只需要看看是不是 _ 就好了
+                /* 字符串的最后一位应该比他的长度小 1 */
+                var validTail = s[s.length] != '_'
+                // 检查长度
+                var validLength = s.length >= 2 && s.length <= 10
+                // 只有条件都成立才会返回 true
+                return validChar && validHead && validTail && validLength
+            }
+
+            var insertError = function() {
+                var div = document.querySelector('#id-div-form')
+                var msg = '<h1 class="msg-error">用户名错误<h1>'
+                div.insertAdjacentHTML('beforeend', msg);
+            }
+        </script>
+    </body>
+</html>
