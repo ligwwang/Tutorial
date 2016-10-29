@@ -83,20 +83,29 @@ var capString = function(str) {
     给定一个英文句子 str（由空格隔开的单词组成的字符串）
     返回「将句中所有单词变为有且只有首字母大写的形式」的 string
     */
-    // 将单词字母全部变为小写，并将单词存入数组
+    // 将单词字母全部变为小写，并存入数组
     var lower = str.toLowerCase().split(' ')
     for (var i = 0; i < lower.length; i++) {
         var char = lower[i].charAt(0)
+        // 将首字母变为大写
         lower[i] = lower[i].replace(char, char.toUpperCase())
     }
-    var upperOfFirst = lower.join(' ')
-    return  upperOfFirst
+    return lower.join(' ')
 }
 
 
 
 // 作业 4
 //
+var number = function(str, n) {
+    var num = 0
+    for (var i = 0; i < str.length; i++) {
+        if (str[n] === str[i]) {
+            num++
+        }
+    }
+    return num
+}
 var letterCount = function(str) {
     /*
     给定一个只包含字母的字符串，返回单个字母出现的次数
@@ -114,9 +123,20 @@ var letterCount = function(str) {
     参数 "hello"
     返回值 [['h', 1], ['e', 1], ['l', 2], ['o', 1]]
     */
-
+    var arr1 = []
+    var arr2 = []
+    var object = {}
+    for (var i = 0; i < str.length; i++) {
+        object[str[i]] = number(str, i)
+    }
+    var keys = Object.keys(object)
+    for (var i = 0; i < keys.length; i++) {
+        arr1 = [keys[i], object[keys[i]]]
+        arr2.push(arr1)
+    }
+    return arr2
 }
-
+// letterCount('aabvccsdddd')
 
 // 作业 5
 //
@@ -133,8 +153,16 @@ var queryFromObject = function(param) {
 
     注意, 使用 Object.keys 函数
     */
+    var str = ''
+    var arr = Object.keys(param)
+    for (var i = 0; i < arr.length; i++) {
+        var s = arr[i] + '=' + param[arr[i]] + '&'
+        str += s
+    }
+    str = str.slice(0, str.length-1)
+    return str
 }
-
+// queryFromObject({a: 1, b: 3, c: 2})
 
 // 作业 6
 //
@@ -149,11 +177,26 @@ var argsFromQuery = function(queryString) {
         'bar': 'far',
     }
     */
+    var object1 = {}
+    // 以 & 为分隔符创建数组
+    var arr = queryString.split('&')
+    for (var i = 0; i < arr.length; i++) {
+        var ele = arr[i]
+        for (var j = 0; j < ele.length; j++) {
+            // 以 = 为分隔符区别 key 和 value
+            if (ele[j] === '=') {
+                object1[ele.slice(0, j)] = ele.slice(j+1)
+            }
+        }
+    }
+    return object1
 }
+// argsFromQuery('foo=1&bar=far')
 
 
 // 作业 7
 //
+// 本题参考了其他同学的作业
 var ajaxGet = function(url, callback) {
     /*
     利用上课板书, 实现 ajaxGet 函数, 用 GET 方法请求一个 URL
@@ -161,6 +204,15 @@ var ajaxGet = function(url, callback) {
     callback 是一个函数, 在接受服务器响应后调用并传递参数给它
     本题不会就放弃
     */
+    var request = new XMLHttpRequest()
+    request.onload = function () {
+        if (request.status == 200 ) {
+            callback()
+        }
+
+    }
+    request.open("GET",url)
+    request.send(null)
 }
 
 
