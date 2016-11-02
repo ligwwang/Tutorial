@@ -208,12 +208,13 @@ log('反序列化后的数组', typeof a, a)
 
 var currentTime = function() {
     var d = new Date()
+    var year = d.getFullYear()
     var month = d.getMonth() + 1
     var date = d.getDate()
     var hours = d.getHours()
     var minutes = d.getMinutes()
     var seconds = d.getSeconds()
-    var timeString = `${month}/${date} ${hours}:${minutes}:${seconds}`
+    var timeString = `${year}/${month}/${date} ${hours}:${minutes}:${seconds}`
     return timeString
 }
 // 时间标准库
