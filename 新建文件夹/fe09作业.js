@@ -198,6 +198,7 @@ var bindEventDelegate = function(element, eventName, callback, responseClass) {
     */
     element.addEventLister(eventName, function(event) {
         var target = event.target
+        console.log('target', target)
         if (target.classList.contains(responseClass)) {
             callback(event)
         }
@@ -238,7 +239,7 @@ var bindAll = function(selector, eventName, callback, responseClass) {
 
     给 selector 选中的所有元素绑定 eventName 事件
     当 responseClass 给出的时候, callback 只会响应拥有 responseClass 类的元素
-    当 responseClass 没有给的时候, callback 直接响应
+    // 当 responseClass 没有给的时候, callback 直接响应
 
     这题做不出来就放弃
     */
